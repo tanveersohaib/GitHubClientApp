@@ -17,7 +17,7 @@ import com.example.sohaibtanveer.githubdemo.Models.OttoDataObject;
 import com.example.sohaibtanveer.githubdemo.Models.RepoBranchPOJO;
 import com.example.sohaibtanveer.githubdemo.Models.TagsPOJO;
 import com.example.sohaibtanveer.githubdemo.R;
-import com.example.sohaibtanveer.githubdemo.Util.RetrofitClientHandler;
+import com.example.sohaibtanveer.githubdemo.Util.RetrofitClient;
 
 import java.util.List;
 
@@ -87,7 +87,7 @@ public class SwitchBranchActivity extends AppCompatActivity implements StringCli
     private void loadBranches(){
         if(repoName != null || accessToken != null) {
 
-            GitHubService serviceUser = RetrofitClientHandler.getClient("https://api.github.com").create(GitHubService.class);
+            GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
             Call<List<RepoBranchPOJO>> branches = serviceUser.getBranches("/repos/" + repoName + "/branches", accessToken);
             branches.enqueue(new Callback<List<RepoBranchPOJO>>() {
                 @Override
@@ -121,7 +121,7 @@ public class SwitchBranchActivity extends AppCompatActivity implements StringCli
     private void loadTags(){
         if(repoName != null || accessToken != null) {
 
-            GitHubService serviceUser = RetrofitClientHandler.getClient("https://api.github.com").create(GitHubService.class);
+            GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
             Call<List<TagsPOJO>> tags = serviceUser.getTags("/repos/" + repoName + "/tags", accessToken);
             tags.enqueue(new Callback<List<TagsPOJO>>() {
                 @Override

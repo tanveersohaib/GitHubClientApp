@@ -26,7 +26,8 @@ import com.example.sohaibtanveer.githubdemo.Models.ItemPOJO;
 import com.example.sohaibtanveer.githubdemo.Models.OttoDataObject;
 import com.example.sohaibtanveer.githubdemo.Models.ReadmePOJO;
 import com.example.sohaibtanveer.githubdemo.R;
-import com.example.sohaibtanveer.githubdemo.Util.RetrofitClientHandler;
+import com.example.sohaibtanveer.githubdemo.Util.RCallback;
+import com.example.sohaibtanveer.githubdemo.Util.RetrofitClient;
 import com.google.gson.Gson;
 import com.squareup.otto.Subscribe;
 
@@ -176,16 +177,17 @@ public class CodeFragment extends Fragment {
 
     private void getReadmeUrl(){
         progressDialog.show();
-        GitHubService serviceUser = RetrofitClientHandler.getClient("https://api.github.com").create(GitHubService.class);
+        GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
         Call<ReadmePOJO> readme = serviceUser.getReadmeObject("/repos/" + repository.getFullName() + "/readme",accessToken);
-        readme.enqueue(new Callback<ReadmePOJO>() {
+        readme.enqueue(new RCallback<ReadmePOJO>() {
+
             @Override
-            public void onResponse(Call<ReadmePOJO> readme, Response<ReadmePOJO> response) {
-                loadReadMe(response.body());
+            public void success(ReadmePOJO object) {
+
             }
 
             @Override
-            public void onFailure(Call<ReadmePOJO> readme, Throwable t) {
+            public void error(String error) {
 
             }
         });
@@ -201,7 +203,7 @@ public class CodeFragment extends Fragment {
 
     private void getCodeFiles(String dir,final String ref){
         progressDialog.show();
-        GitHubService serviceUser = RetrofitClientHandler.getClient("https://api.github.com").create(GitHubService.class);
+        GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
         Call<List<DirectoryPOJO>> directory;
         if(dir == null)
              directory = serviceUser.getFiles("/repos/" + repository.getFullName() + "/contents",ref,accessToken);

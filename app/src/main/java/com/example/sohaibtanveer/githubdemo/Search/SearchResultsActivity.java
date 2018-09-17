@@ -17,7 +17,8 @@ import com.example.sohaibtanveer.githubdemo.Models.ItemPOJO;
 import com.example.sohaibtanveer.githubdemo.Models.RepoSearchResultPOJO;
 import com.example.sohaibtanveer.githubdemo.R;
 import com.example.sohaibtanveer.githubdemo.RepositoryView.RepositoryViewActivity;
-import com.example.sohaibtanveer.githubdemo.Util.RetrofitClientHandler;
+import com.example.sohaibtanveer.githubdemo.Util.RCallback;
+import com.example.sohaibtanveer.githubdemo.Util.RetrofitClient;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -25,6 +26,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.widget.Toast.*;
 
 public class SearchResultsActivity extends AppCompatActivity implements ItemClickListener {
 
@@ -56,22 +59,27 @@ public class SearchResultsActivity extends AppCompatActivity implements ItemClic
             progressDialog.show();
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search your data somehow
-            final GitHubService service = RetrofitClientHandler.getClient("https://api.github.com").create(GitHubService.class);
+            final GitHubService service = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
             SharedPreferences pref = getSharedPreferences("USER_DATA",MODE_PRIVATE);
             String accessToken = pref.getString("accessToken",null);
             Call<RepoSearchResultPOJO> call = service.getRepositorySearchResults(query,accessToken);
-            call.enqueue(new Callback<RepoSearchResultPOJO>() {
+            call.enqueue(new RCallback<RepoSearchResultPOJO>() {
                 @Override
-                public void onResponse(Call<RepoSearchResultPOJO> call, Response<RepoSearchResultPOJO> response) {
-                    generateList(response.body().getItems());
+                public void success(RepoSearchResultPOJO object) {
+                    generateList(object.getItems());
                 }
 
                 @Override
-                public void onFailure(Call<RepoSearchResultPOJO> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                public void error(String error) {
+                    progressDialog.dismiss();
+                    displayError(error);
                 }
             });
         }
+    }
+
+    private void displayError(String error){
+        Toast.makeText(this,error,Toast.LENGTH_LONG).show();
     }
 
     private void generateList(List<ItemPOJO> data){

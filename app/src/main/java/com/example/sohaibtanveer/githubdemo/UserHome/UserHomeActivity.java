@@ -26,7 +26,7 @@ import com.example.sohaibtanveer.githubdemo.Models.UserPOJO;
 import com.example.sohaibtanveer.githubdemo.R;
 import com.example.sohaibtanveer.githubdemo.Search.SearchResultsActivity;
 import com.example.sohaibtanveer.githubdemo.Util.GitHubService;
-import com.example.sohaibtanveer.githubdemo.Util.RetrofitClientHandler;
+import com.example.sohaibtanveer.githubdemo.Util.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
@@ -53,7 +53,7 @@ public class UserHomeActivity extends AppCompatActivity
         else {
             String code = getCode();
             if (code != null) {
-                final GitHubService service = RetrofitClientHandler.getClient("https://github.com").create(GitHubService.class);
+                final GitHubService service = RetrofitClient.getClient("https://github.com").create(GitHubService.class);
                 Call<AccessTokenPOJO> call = service.getAccessToken("25a2190a925d5982a5ae", "feb32616d4c1331e755fe5a33193c3deafc4fa48", code);
                 call.enqueue(new Callback<AccessTokenPOJO>() {
                     @Override
@@ -94,7 +94,7 @@ public class UserHomeActivity extends AppCompatActivity
 
    private void getUser(){
         if(userAccessToken!=null){
-            GitHubService serviceUser = RetrofitClientHandler.getClient("https://api.github.com").create(GitHubService.class);
+            GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
             Call<UserPOJO> callUser = serviceUser.getUser(userAccessToken);
             callUser.enqueue(new Callback<UserPOJO>() {
                 @Override

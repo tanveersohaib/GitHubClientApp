@@ -10,12 +10,13 @@ import android.widget.Button;
 
 import com.example.sohaibtanveer.githubdemo.R;
 import com.example.sohaibtanveer.githubdemo.UserHome.UserHomeActivity;
+import com.example.sohaibtanveer.githubdemo.Util.SharedData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
+
     public static Bus bus = new Bus(ThreadEnforcer.ANY);
 
     @Override
@@ -45,11 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isUserActive(){
-        SharedPreferences pref = getSharedPreferences("user_data",MODE_PRIVATE);
-        if(pref.contains("access_token"))
-            return true;
-        else
-            return false;
+        return SharedData.getAccessToken()==null? false: true;
     }
 }
 

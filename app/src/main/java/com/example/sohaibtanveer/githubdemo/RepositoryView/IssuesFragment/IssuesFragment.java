@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.example.sohaibtanveer.githubdemo.Auth.LoginActivity;
 import com.example.sohaibtanveer.githubdemo.R;
 
+import static com.example.sohaibtanveer.githubdemo.GithubApplication.bus;
+
 public class IssuesFragment extends Fragment {
 
     public IssuesFragment() {
@@ -29,7 +31,7 @@ public class IssuesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        LoginActivity.bus.register(this);
+        bus.register(this);
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_issues, container, false);
@@ -39,7 +41,7 @@ public class IssuesFragment extends Fragment {
     public void onAttach(Context context) {
 
         super.onAttach(context);
-        LoginActivity.bus.post(this);
+        bus.post(this);
     }
 
     @Override

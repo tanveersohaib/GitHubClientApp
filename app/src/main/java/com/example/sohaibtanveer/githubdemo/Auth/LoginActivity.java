@@ -17,12 +17,10 @@ import com.squareup.otto.ThreadEnforcer;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static Bus bus = new Bus(ThreadEnforcer.ANY);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(isUserActive()==true) {
+        if(UserHomeActivity.isUserActive()) {
             Intent intent = new Intent(this,UserHomeActivity.class);
             startActivity(intent);
         }
@@ -45,8 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    private boolean isUserActive(){
-        return SharedData.getAccessToken()==null? false: true;
-    }
+
 }
 

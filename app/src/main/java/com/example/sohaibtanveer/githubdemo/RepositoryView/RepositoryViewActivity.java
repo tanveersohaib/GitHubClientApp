@@ -20,21 +20,11 @@ import com.squareup.otto.Subscribe;
 
 public class RepositoryViewActivity extends AppCompatActivity {
 
-    private ItemPOJO repository;
-    private String repoJsonString;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repository_view);
-
-        Intent intent = getIntent();
-        repoJsonString = intent.getStringExtra("repository");
-        Gson gson = new Gson();
-        repository = gson.fromJson(repoJsonString,ItemPOJO.class);
-
         setBottomNavBar();
-        LoginActivity.bus.register(this);
     }
 
     private void setBottomNavBar() {
@@ -47,7 +37,7 @@ public class RepositoryViewActivity extends AppCompatActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.bottom_nav_code:
-                                selectedFragment = CodeFragment.newInstance(repoJsonString);
+                                selectedFragment = CodeFragment.newInstance();
                                 break;
                             case R.id.bottom_nav_issues:
                                 selectedFragment = IssuesFragment.newInstance();
@@ -65,28 +55,11 @@ public class RepositoryViewActivity extends AppCompatActivity {
 
         //Manually displaying the first fragment - one time only
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, CodeFragment.newInstance(repoJsonString));
+        transaction.replace(R.id.frame_layout, CodeFragment.newInstance());
         transaction.commit();
 
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(1).setChecked(true);
     }
-
-    @Subscribe
-    public void fragmentListener(Fragment context){
-        /*if(context instanceof CodeFragment)
-            Toast.makeText(this,"CodeFragment",Toast.LENGTH_LONG).show();
-        else if(context instanceof IssuesFragment)
-            Toast.makeText(this,"IssuesFragment",Toast.LENGTH_LONG).show();
-        else if(context instanceof PullRequestsFragment)
-            Toast.makeText(this,"PullReqFragment",Toast.LENGTH_LONG).show();
-        else if(context instanceof ReadmeFragment)
-            Toast.makeText(this,"ReadmeFragment",Toast.LENGTH_LONG).show();
-        else if(context instanceof CommitsFragment)
-            Toast.makeText(this,"CommitsFragment",Toast.LENGTH_LONG).show();
-        else if(context instanceof CodeFilesFragment)
-            Toast.makeText(this,"CodeFilesFragment",Toast.LENGTH_LONG).show();*/
-    }
-
 
 }

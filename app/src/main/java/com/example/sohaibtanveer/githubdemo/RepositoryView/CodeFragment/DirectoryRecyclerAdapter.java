@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.sohaibtanveer.githubdemo.GithubApplication.bus;
+
 public class DirectoryRecyclerAdapter extends RecyclerView.Adapter<DirectoryRecyclerAdapter.CustomViewHolder> {
 
     private List<DirectoryPOJO> itemList;
@@ -55,8 +57,7 @@ public class DirectoryRecyclerAdapter extends RecyclerView.Adapter<DirectoryRecy
             OttoDataObject com = new OttoDataObject();
             com.setTypeOfData("directory_data");
             com.setObj(data);
-            LoginActivity.bus.register(this);
-            LoginActivity.bus.post(com);
+            bus.post(com);
         }
     }
 

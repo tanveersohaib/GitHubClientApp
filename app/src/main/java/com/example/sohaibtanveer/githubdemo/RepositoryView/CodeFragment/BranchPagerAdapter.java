@@ -2,9 +2,10 @@ package com.example.sohaibtanveer.githubdemo.RepositoryView.CodeFragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class BranchPagerAdapter extends FragmentStatePagerAdapter {
+public class BranchPagerAdapter extends FragmentPagerAdapter {
     int mNumOfTabs;
 
     public BranchPagerAdapter(FragmentManager fm, int NumOfTabs) {

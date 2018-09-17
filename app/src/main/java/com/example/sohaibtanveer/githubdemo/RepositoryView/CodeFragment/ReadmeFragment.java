@@ -6,10 +6,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.sohaibtanveer.githubdemo.Models.ReadmePOJO;
 import com.example.sohaibtanveer.githubdemo.R;
+import com.example.sohaibtanveer.githubdemo.Util.GitHubService;
+import com.example.sohaibtanveer.githubdemo.Util.RCallback;
+import com.example.sohaibtanveer.githubdemo.Util.RetrofitClient;
+import com.example.sohaibtanveer.githubdemo.Util.SharedData;
+
+import br.tiagohm.markdownview.MarkdownView;
+import retrofit2.Call;
 
 public class ReadmeFragment extends Fragment {
+
+    private View rootView;
 
     public ReadmeFragment() {
         // Required empty public constructor
@@ -29,7 +40,9 @@ public class ReadmeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_readme, container, false);
+        rootView =  inflater.inflate(R.layout.fragment_readme, container, false);
+        getReadmeUrl();
+        return rootView;
     }
 
     @Override
@@ -40,6 +53,37 @@ public class ReadmeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    private void getReadmeUrl(){
+        //progressDialog.show();
+        GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
+        Call<ReadmePOJO> readme = serviceUser.getReadmeObject("/repos/" + SharedData.getRepositoryName() + "/readme",SharedData.getAccessToken());
+        readme.enqueue(new RCallback<ReadmePOJO>() {
+
+            @Override
+            public void success(ReadmePOJO object) {
+                loadReadMe(object);
+            }
+
+            @Override
+            public void error(String error) {
+          //      progressDialog.dismiss();
+                showError(error);
+            }
+        });
+    }
+
+    private void loadReadMe(ReadmePOJO obj){
+        //progressDialog.dismiss();
+        if(obj != null) {
+            MarkdownView mdView  = (MarkdownView) getActivity().findViewById(R.id.readmeMarkdown);
+            mdView.loadMarkdownFromUrl(obj.getDownloadUrl());
+        }
+    }
+
+    private void showError(String error){
+        Toast.makeText(getContext(),error,Toast.LENGTH_LONG).show();
     }
 
 }

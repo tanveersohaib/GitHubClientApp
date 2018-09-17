@@ -18,12 +18,15 @@ import com.example.sohaibtanveer.githubdemo.Models.RepoBranchPOJO;
 import com.example.sohaibtanveer.githubdemo.Models.TagsPOJO;
 import com.example.sohaibtanveer.githubdemo.R;
 import com.example.sohaibtanveer.githubdemo.Util.RetrofitClient;
+import com.example.sohaibtanveer.githubdemo.Util.SharedData;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.sohaibtanveer.githubdemo.GithubApplication.bus;
 
 public class SwitchBranchActivity extends AppCompatActivity implements StringClickListener{
 
@@ -39,7 +42,7 @@ public class SwitchBranchActivity extends AppCompatActivity implements StringCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_switch_branch);
 
-        LoginActivity.bus.register(this);
+        bus.register(this);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.switch_tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("BRANCHES"));
@@ -78,9 +81,9 @@ public class SwitchBranchActivity extends AppCompatActivity implements StringCli
 
             }
         });
-        Intent intent = getIntent();
-        repoName = intent.getStringExtra("repo_name");
-        accessToken = intent.getStringExtra("access_token");
+        repoName = SharedData.getRepositoryName();
+        accessToken = SharedData.getAccessToken();
+
         loadBranches();
     }
 
@@ -173,7 +176,7 @@ public class SwitchBranchActivity extends AppCompatActivity implements StringCli
         OttoDataObject com = new OttoDataObject();
         com.setTypeOfData("branch_reference");
         com.setObj(branch);
-        LoginActivity.bus.post(com);
+        bus.post(com);
         this.finish();
     }
 }

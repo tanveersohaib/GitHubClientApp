@@ -21,12 +21,15 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sohaibtanveer.githubdemo.Auth.LoginActivity;
 import com.example.sohaibtanveer.githubdemo.Models.AccessTokenPOJO;
 import com.example.sohaibtanveer.githubdemo.Models.UserPOJO;
 import com.example.sohaibtanveer.githubdemo.R;
 import com.example.sohaibtanveer.githubdemo.Search.SearchResultsActivity;
 import com.example.sohaibtanveer.githubdemo.Util.GitHubService;
+import com.example.sohaibtanveer.githubdemo.Util.RCallback;
 import com.example.sohaibtanveer.githubdemo.Util.RetrofitClient;
+import com.example.sohaibtanveer.githubdemo.Util.SharedData;
 import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
@@ -43,11 +46,10 @@ public class UserHomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
-
         setContents();
-        if(isUserActive()==true) {
-            SharedPreferences pref = getSharedPreferences("user_data",MODE_PRIVATE);
-            userAccessToken = pref.getString("access_token",null);
+
+        if(isUserActive()) {
+            userAccessToken = SharedData.getAccessToken();
             getUser();
         }
         else {
@@ -96,17 +98,16 @@ public class UserHomeActivity extends AppCompatActivity
         if(userAccessToken!=null){
             GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
             Call<UserPOJO> callUser = serviceUser.getUser(userAccessToken);
-            callUser.enqueue(new Callback<UserPOJO>() {
+            callUser.enqueue(new RCallback<UserPOJO>() {
                 @Override
-                public void onResponse(Call<UserPOJO> callUser, Response<UserPOJO> response) {
-                    user = response.body();
+                public void success(UserPOJO object) {
+                    user = object;
                     updateUI();
                 }
 
                 @Override
-                public void onFailure(Call<UserPOJO> callUser, Throwable t) {
-                    String error = t.getMessage();
-                    Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                public void error(String error) {
+                    showError(error);
                 }
             });
         }
@@ -120,6 +121,10 @@ public class UserHomeActivity extends AppCompatActivity
             TextView username = (TextView) findViewById(R.id.username);
             username.setText(user.getLogin());
         }
+    }
+
+    private void showError(String error){
+        Toast.makeText(this,error,Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -146,17 +151,10 @@ public class UserHomeActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.user_home, menu);
-        /*// Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));*/
+
         SearchView search = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
-        // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
         search.setQueryHint(getResources().getString(R.string.search_hint));
@@ -175,6 +173,7 @@ public class UserHomeActivity extends AppCompatActivity
             return true;
         }
         else if(id == R.id.action_logout){
+            logout();
             return true;
         }
 
@@ -214,11 +213,15 @@ public class UserHomeActivity extends AppCompatActivity
         }
         return code;
     }
-    private boolean isUserActive(){
-        SharedPreferences pref = getSharedPreferences("user_data",MODE_PRIVATE);
-        if(pref.contains("access_token"))
-            return true;
-        else
-            return false;
+
+    public static boolean isUserActive(){
+        return SharedData.hasAccessToken();
+    }
+
+    public void logout(){
+        SharedData.removeAccessToken();
+        //Redirect to LoginScreen
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }

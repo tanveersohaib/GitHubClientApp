@@ -19,6 +19,7 @@ import com.example.sohaibtanveer.githubdemo.R;
 import com.example.sohaibtanveer.githubdemo.RepositoryView.RepositoryViewActivity;
 import com.example.sohaibtanveer.githubdemo.Util.RCallback;
 import com.example.sohaibtanveer.githubdemo.Util.RetrofitClient;
+import com.example.sohaibtanveer.githubdemo.Util.SharedData;
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -60,8 +61,7 @@ public class SearchResultsActivity extends AppCompatActivity implements ItemClic
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search your data somehow
             final GitHubService service = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
-            SharedPreferences pref = getSharedPreferences("USER_DATA",MODE_PRIVATE);
-            String accessToken = pref.getString("accessToken",null);
+            String accessToken = SharedData.getAccessToken();
             Call<RepoSearchResultPOJO> call = service.getRepositorySearchResults(query,accessToken);
             call.enqueue(new RCallback<RepoSearchResultPOJO>() {
                 @Override
@@ -101,9 +101,7 @@ public class SearchResultsActivity extends AppCompatActivity implements ItemClic
     @Override
     public void onClick(View v,ItemPOJO repo){
         Intent i = new Intent(this,RepositoryViewActivity.class);
-        Gson gson = new Gson();
-        String repoJsonString = gson.toJson(repo);
-        i.putExtra("repository",repoJsonString);
+        SharedData.setRepositoryName(repo.getFullName());
         startActivity(i);
     }
 

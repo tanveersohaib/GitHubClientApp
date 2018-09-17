@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.example.sohaibtanveer.githubdemo.Auth.LoginActivity;
 import com.example.sohaibtanveer.githubdemo.R;
 
+import static com.example.sohaibtanveer.githubdemo.GithubApplication.bus;
+
 
 public class CommitsFragment extends Fragment {
 
@@ -37,7 +39,7 @@ public class CommitsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        LoginActivity.bus.post(this);
+        bus.post(this);
     }
 
     @Override

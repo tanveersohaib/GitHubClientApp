@@ -13,6 +13,8 @@ import com.example.sohaibtanveer.githubdemo.R;
 
 import java.util.ArrayList;
 
+import static com.example.sohaibtanveer.githubdemo.GithubApplication.bus;
+
 public class PathRecyclerAdapter extends RecyclerView.Adapter<PathRecyclerAdapter.CustomViewHolder> {
 
     private ArrayList<String> items;
@@ -36,7 +38,7 @@ public class PathRecyclerAdapter extends RecyclerView.Adapter<PathRecyclerAdapte
             super(itemView);
             itemView.setOnClickListener(this);
             pathName = (TextView) itemView.findViewById(R.id.pathName);
-            LoginActivity.bus.register(this);
+            bus.register(this);
         }
 
         @Override
@@ -49,7 +51,7 @@ public class PathRecyclerAdapter extends RecyclerView.Adapter<PathRecyclerAdapte
             data.add(ref);
             com.setTypeOfData("path_information");
             com.setObj(data);
-            LoginActivity.bus.post(com);
+            bus.post(com);
             removeItem(getAdapterPosition());
         }
     }

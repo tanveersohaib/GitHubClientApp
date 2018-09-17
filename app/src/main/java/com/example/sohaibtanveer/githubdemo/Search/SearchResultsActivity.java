@@ -3,7 +3,6 @@ package com.example.sohaibtanveer.githubdemo.Search;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,22 +19,16 @@ import com.example.sohaibtanveer.githubdemo.RepositoryView.RepositoryViewActivit
 import com.example.sohaibtanveer.githubdemo.Util.RCallback;
 import com.example.sohaibtanveer.githubdemo.Util.RetrofitClient;
 import com.example.sohaibtanveer.githubdemo.Util.SharedData;
-import com.google.gson.Gson;
 
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.widget.Toast.*;
 
 public class SearchResultsActivity extends AppCompatActivity implements ItemClickListener {
 
     private RecyclerView recyclerView;
     private RepositoryRecyclerAdapter adapter;
-
-    private ProgressDialog progressDialog;
+    private ProgressDialog pBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +47,10 @@ public class SearchResultsActivity extends AppCompatActivity implements ItemClic
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("Loading...");
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.show();
+            pBar = new ProgressDialog(this);
+            pBar.setMessage("Loading...");
+            pBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pBar.show();
             String query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search your data somehow
             final GitHubService service = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
@@ -71,7 +64,7 @@ public class SearchResultsActivity extends AppCompatActivity implements ItemClic
 
                 @Override
                 public void error(String error) {
-                    progressDialog.dismiss();
+                    pBar.dismiss();
                     displayError(error);
                 }
             });
@@ -83,7 +76,7 @@ public class SearchResultsActivity extends AppCompatActivity implements ItemClic
     }
 
     private void generateList(List<ItemPOJO> data){
-        progressDialog.dismiss();
+        pBar.dismiss();
         if(data != null) {
             if (adapter == null) {
                 recyclerView = findViewById(R.id.resultRecyclerView);

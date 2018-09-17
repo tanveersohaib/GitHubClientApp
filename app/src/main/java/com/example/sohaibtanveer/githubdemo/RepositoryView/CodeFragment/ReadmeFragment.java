@@ -1,5 +1,6 @@
 package com.example.sohaibtanveer.githubdemo.RepositoryView.CodeFragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import retrofit2.Call;
 public class ReadmeFragment extends Fragment {
 
     private View rootView;
+    private ProgressDialog pBar;
 
     public ReadmeFragment() {
         // Required empty public constructor
@@ -41,6 +43,7 @@ public class ReadmeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView =  inflater.inflate(R.layout.fragment_readme, container, false);
+        pBar = new ProgressDialog(getActivity());
         getReadmeUrl();
         return rootView;
     }
@@ -56,7 +59,7 @@ public class ReadmeFragment extends Fragment {
     }
 
     private void getReadmeUrl(){
-        //progressDialog.show();
+        pBar.show();
         GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
         Call<ReadmePOJO> readme = serviceUser.getReadmeObject("/repos/" + SharedData.getRepositoryName() + "/readme",SharedData.getAccessToken());
         readme.enqueue(new RCallback<ReadmePOJO>() {
@@ -68,14 +71,14 @@ public class ReadmeFragment extends Fragment {
 
             @Override
             public void error(String error) {
-          //      progressDialog.dismiss();
+                pBar.dismiss();
                 showError(error);
             }
         });
     }
 
     private void loadReadMe(ReadmePOJO obj){
-        //progressDialog.dismiss();
+        pBar.dismiss();
         if(obj != null) {
             MarkdownView mdView  = (MarkdownView) getActivity().findViewById(R.id.readmeMarkdown);
             mdView.loadMarkdownFromUrl(obj.getDownloadUrl());

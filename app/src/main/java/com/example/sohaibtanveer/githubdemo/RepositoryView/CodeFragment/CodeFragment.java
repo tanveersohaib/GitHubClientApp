@@ -48,7 +48,6 @@ import static com.example.sohaibtanveer.githubdemo.GithubApplication.bus;
 public class CodeFragment extends Fragment {
 
     private static View rootView;
-    private ProgressDialog progressDialog;
 
     public CodeFragment() {
         // Required empty public constructor
@@ -62,9 +61,6 @@ public class CodeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Loading...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
     }
 
     @Override

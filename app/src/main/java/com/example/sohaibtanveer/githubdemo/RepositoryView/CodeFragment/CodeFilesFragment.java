@@ -1,8 +1,7 @@
 package com.example.sohaibtanveer.githubdemo.RepositoryView.CodeFragment;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.sohaibtanveer.githubdemo.Auth.LoginActivity;
 import com.example.sohaibtanveer.githubdemo.Models.DirectoryPOJO;
 import com.example.sohaibtanveer.githubdemo.Models.OttoDataObject;
 import com.example.sohaibtanveer.githubdemo.R;
@@ -44,6 +42,7 @@ public class CodeFilesFragment extends Fragment {
     private PathRecyclerAdapter adapterPath;
     private RecyclerView.LayoutManager layoutManagerPath;
 
+    private ProgressDialog pBar;
 
     public CodeFilesFragment() {
         // Required empty public constructor
@@ -71,6 +70,7 @@ public class CodeFilesFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_codefiles, container, false);
         bus.register(this);
+        pBar = new ProgressDialog(getActivity());
         setupUI();
         return rootView;
     }
@@ -95,7 +95,7 @@ public class CodeFilesFragment extends Fragment {
     }
 
     private void getCodeFiles(String dir, final String ref){
-        //progressDialog.show();
+        pBar.show();
         GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
         Call<List<DirectoryPOJO>> directory;
         if(dir == null)
@@ -112,7 +112,7 @@ public class CodeFilesFragment extends Fragment {
 
             @Override
             public void error(String error) {
-                //progressDialog.dismiss();
+                pBar.dismiss();
                 showError(error);
             }
         });
@@ -120,7 +120,7 @@ public class CodeFilesFragment extends Fragment {
     }
 
     private void loadCodeFiles(List<DirectoryPOJO> directories, String ref){
-        //progressDialog.dismiss();
+        pBar.dismiss();
         if(directories != null) {
             if(directoryAdapter == null) {
                 recyclerViewDirectory = (RecyclerView) rootView.findViewById(R.id.directoryRecyclerView);

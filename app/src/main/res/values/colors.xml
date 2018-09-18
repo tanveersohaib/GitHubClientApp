@@ -7,4 +7,8 @@
     <color name="sample_focused">#12127b</color>
     <color name="sample_disabled_pressed">#837f7f</color>
     <color name="sample_disabled_not_pressed">#2b2a2a</color>
+    <color name = "black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="accent_material_light">#000000</color>
+    <color name="primary_dark_material_light">#e0dada</color>
 </resources>

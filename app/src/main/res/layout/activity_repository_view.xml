@@ -5,26 +5,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RepositoryView.RepositoryViewActivity"
+    tools:context=".repositoryView.RepositoryViewActivity"
     android:fitsSystemWindows="true">
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/navigation"
         android:animateLayoutChanges="true">
-
-    </FrameLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/lightGray"
-        app:itemIconTint="@color/nav_bar_state_list"
-        app:itemTextColor="@color/nav_bar_state_list"
         app:menu="@menu/repositoryview_bottomnav_menu"/>
 
 </RelativeLayout>

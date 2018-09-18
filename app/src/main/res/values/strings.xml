@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GitHub Mobile</string>
     <string name="loginMessage">Sign in using your GitHub account to use GitHub Mobile</string>
-    <string name="title_activity_user_home">UserHome</string>
+    <string name="title_activity_user_home">GITHUB</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>

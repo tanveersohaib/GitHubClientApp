@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/bottom_nav_code"
-        android:icon="@drawable/ic_codeicon"
+        android:icon="@drawable/ic_code"
         android:title="@string/codeIconName"
         app:showAsAction="always"/>
     <item
         android:id="@+id/bottom_nav_issues"
-        android:icon="@drawable/ic_issuesicon"
+        android:icon="@drawable/ic_issue_opened"
         android:title="@string/issuesIconName"
         app:showAsAction="always"/>
     <item
         android:id="@+id/bottom_nav_pullReq"
-        android:icon="@drawable/ic_pullrequestsicon"
+        android:icon="@drawable/ic_git_pull_request"
         android:title="@string/pullReqIconName"
         app:showAsAction="always"/>
 

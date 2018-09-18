@@ -6,9 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +32,9 @@ import com.example.sohaibtanveer.githubdemo.auth.LoginActivity;
 import com.example.sohaibtanveer.githubdemo.models.AccessTokenPOJO;
 import com.example.sohaibtanveer.githubdemo.models.UserPOJO;
 import com.example.sohaibtanveer.githubdemo.R;
+import com.example.sohaibtanveer.githubdemo.repositoryView.codeFragment.CodeFragment;
+import com.example.sohaibtanveer.githubdemo.repositoryView.issuesFragment.IssuesFragment;
+import com.example.sohaibtanveer.githubdemo.repositoryView.pullRequestsFragment.PullRequestsFragment;
 import com.example.sohaibtanveer.githubdemo.search.SearchResultsActivity;
 import com.example.sohaibtanveer.githubdemo.util.GitHubService;
 import com.example.sohaibtanveer.githubdemo.util.RCallback;
@@ -44,12 +55,15 @@ public class UserHomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
         setContents();
+        login();
+        setBottomNavBar();
+    }
 
-        if(isUserActive()) {
+    private void login() {
+        if (isUserActive()) {
             userAccessToken = SharedData.getAccessToken();
             getUser();
-        }
-        else {
+        } else {
             String code = getCode();
             if (code != null) {
                 final GitHubService service = RetrofitClient.getClient("https://github.com").create(GitHubService.class);
@@ -71,7 +85,7 @@ public class UserHomeActivity extends AppCompatActivity
         }
     }
 
-    private void setContents(){
+    private void setContents() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -84,10 +98,34 @@ public class UserHomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.nav_tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("MENU"));
+        tabLayout.addTab(tabLayout.newTab().setText("ACCOUNT"));
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.nav_pager);
+        final NavigationPagerAdapter adapter = new NavigationPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
-   private void getUser(){
-        if(userAccessToken!=null){
+    private void getUser() {
+        if (userAccessToken != null) {
             GitHubService serviceUser = RetrofitClient.getClient("https://api.github.com").create(GitHubService.class);
             Call<UserPOJO> callUser = serviceUser.getUser(userAccessToken);
             callUser.enqueue(new RCallback<UserPOJO>() {
@@ -105,17 +143,22 @@ public class UserHomeActivity extends AppCompatActivity
         }
     }
 
-    private void updateUI(){
-        if(user!=null) {
+    private void updateUI() {
+        if (user != null) {
             ImageView avatar = (ImageView) findViewById(R.id.userAvatar);
-            Picasso.get().load(Uri.parse(user.getAvatarUrl())).resize(100, 100).into(avatar);
+            if (user.getAvatarUrl() != null)
+                Picasso.get().load(Uri.parse(user.getAvatarUrl())).resize(100, 100).into(avatar);
             TextView username = (TextView) findViewById(R.id.username);
-            username.setText(user.getLogin());
+            if (user.getLogin() != null)
+                username.setText(user.getLogin());
+            TextView name = (TextView) findViewById(R.id.name);
+            if (user.getName() != null)
+                name.setText(user.getName());
         }
     }
 
-    private void showError(String error){
-        Toast.makeText(this,error,Toast.LENGTH_LONG).show();
+    private void showError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -172,14 +215,39 @@ public class UserHomeActivity extends AppCompatActivity
         return code;
     }
 
-    public static boolean isUserActive(){
+    public static boolean isUserActive() {
         return SharedData.hasAccessToken();
     }
 
-    public void logout(){
-        SharedData.removeAccessToken();
-        //Redirect to LoginScreen
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+    private void setBottomNavBar() {
+        final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.userHomeBottomNav);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.feeds:
+                                selectedFragment = IssuesFragment.newInstance();
+                                break;
+                            case R.id.issues:
+                                selectedFragment = IssuesFragment.newInstance();
+                                break;
+                            case R.id.pullReq:
+                                selectedFragment = PullRequestsFragment.newInstance();
+                                break;
+                        }
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.userHomeContent, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.userHomeContent, IssuesFragment.newInstance());
+        transaction.commit();
+
     }
 }

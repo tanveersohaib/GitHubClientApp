@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/feeds"
+        android:icon="@drawable/ic_feeds"
+        android:title="FEEDS"/>
+    <item
+        android:id="@+id/issues"
+        android:icon="@drawable/ic_issue_opened"
+        android:title="ISSUES"/>
+    <item
+        android:id="@+id/pullReq"
+        android:icon="@drawable/ic_git_pull_request"
+        android:title="PULL REQUESTS"/>
+</menu>

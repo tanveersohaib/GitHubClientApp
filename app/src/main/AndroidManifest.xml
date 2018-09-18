@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.sohaibtanveer.githubdemo">
+    package="com.vodworks.githubdemo">
 
     <!-- Internet Permission -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -40,7 +40,7 @@
 
             <meta-data
                 android:name="android.app.searchable"
-                android:value="com.example.sohaibtanveer.githubdemo.SearchResultsActivity" />
+                android:value="com.vodworks.githubdemo.SearchResultsActivity" />
         </activity>
         <activity
             android:name=".search.SearchResultsActivity"

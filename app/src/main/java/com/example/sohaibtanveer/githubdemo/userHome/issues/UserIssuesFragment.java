@@ -40,7 +40,7 @@ public class UserIssuesFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("CREATED"));
         tabLayout.addTab(tabLayout.newTab().setText("ASSIGNED"));
         tabLayout.addTab(tabLayout.newTab().setText("MENTIONED"));
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.userIssuesPager);
         final IssuesPagerAdapter adapter = new IssuesPagerAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());

@@ -18,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
         if(UserHomeActivity.isUserActive()) {
             Intent intent = new Intent(this,UserHomeActivity.class);
             startActivity(intent);
+            this.finish();
         }
         else {
             setContentView(R.layout.activity_login);
@@ -25,19 +26,18 @@ public class LoginActivity extends AppCompatActivity {
             loginBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setData(Uri.parse("https://github.com/login/oauth/authorize?client_id=25a2190a925d5982a5ae"));
-                    startActivity(i);
+                    redirectToLogin();
                 }
             });
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void redirectToLogin() {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse("https://github.com/login/oauth/authorize?client_id=25a2190a925d5982a5ae"));
+        startActivity(i);
+        this.finish();
     }
-
 
 }
 

@@ -87,6 +87,7 @@ public class UserAccountFragment extends Fragment {
         //Redirect to LoginScreen
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
+        getActivity().finish();
     }
 
 }

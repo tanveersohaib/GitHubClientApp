@@ -16,4 +16,5 @@
     <color name="text_color_secondary">#89898989</color>
     <color name="text_color_primary">#dd000000</color>
     <color name="secondary_text_material_dark">#89898989</color>
+    <color name="gray">#393939</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.sohaibtanveer.githubdemo.userHome.issues;
+package com.example.sohaibtanveer.githubdemo.userHome.issuesAndPullRequests;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 
 import com.example.sohaibtanveer.githubdemo.R;
 
-public class IssuesViewFragment extends Fragment {
+public class ViewFragment extends Fragment {
 
-    public IssuesViewFragment(){}
+    public ViewFragment(){}
 
-    public static IssuesViewFragment newInstance(){
-        return new IssuesViewFragment();
+    public static ViewFragment newInstance(){
+        return new ViewFragment();
     }
 
     @Nullable

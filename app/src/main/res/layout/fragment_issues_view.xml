@@ -1,7 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <info.hoang8f.android.segmented.SegmentedGroup
+        android:id="@+id/issuesSegmentedControl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        app:sc_tint_color="@color/gray"
+        android:backgroundTint="@color/gray"
+        app:sc_checked_text_color="@color/black"
+        android:orientation="horizontal">
+
+        <RadioButton
+        android:id="@+id/opened"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Opened"
+        style="@style/RadioButton" />
+
+        <RadioButton
+            android:id="@+id/closed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Closed"
+            style="@style/RadioButton" />
+    </info.hoang8f.android.segmented.SegmentedGroup>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/issuesRecyclerView"
+        android:layout_below="@id/issuesSegmentedControl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
     
 </RelativeLayout>

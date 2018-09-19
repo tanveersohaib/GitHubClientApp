@@ -32,7 +32,7 @@ import com.example.sohaibtanveer.githubdemo.repositoryView.issuesFragment.Issues
 import com.example.sohaibtanveer.githubdemo.repositoryView.pullRequestsFragment.PullRequestsFragment;
 import com.example.sohaibtanveer.githubdemo.search.SearchResultsActivity;
 import com.example.sohaibtanveer.githubdemo.userHome.drawer.NavigationPagerAdapter;
-import com.example.sohaibtanveer.githubdemo.userHome.issues.UserIssuesFragment;
+import com.example.sohaibtanveer.githubdemo.userHome.issuesAndPullRequests.TabbedFragment;
 import com.example.sohaibtanveer.githubdemo.util.GitHubService;
 import com.example.sohaibtanveer.githubdemo.util.RCallback;
 import com.example.sohaibtanveer.githubdemo.util.RetrofitClient;
@@ -231,10 +231,10 @@ public class UserHomeActivity extends AppCompatActivity
                                 selectedFragment = IssuesFragment.newInstance();
                                 break;
                             case R.id.issues:
-                                selectedFragment = UserIssuesFragment.newInstance();
+                                selectedFragment = TabbedFragment.newInstance();
                                 break;
                             case R.id.pullReq:
-                                selectedFragment = PullRequestsFragment.newInstance();
+                                selectedFragment = TabbedFragment.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

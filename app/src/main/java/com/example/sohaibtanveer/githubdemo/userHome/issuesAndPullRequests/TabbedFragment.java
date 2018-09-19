@@ -1,4 +1,4 @@
-package com.example.sohaibtanveer.githubdemo.userHome.issues;
+package com.example.sohaibtanveer.githubdemo.userHome.issuesAndPullRequests;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,24 +7,19 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sohaibtanveer.githubdemo.R;
-import com.example.sohaibtanveer.githubdemo.userHome.drawer.NavigationPagerAdapter;
 
-import butterknife.ButterKnife;
-
-public class UserIssuesFragment extends Fragment {
+public class TabbedFragment extends Fragment {
 
     private View rootView;
 
-    public UserIssuesFragment(){}
+    public TabbedFragment(){}
 
-    public static UserIssuesFragment newInstance(){
-        return new UserIssuesFragment();
+    public static TabbedFragment newInstance(){
+        return new TabbedFragment();
     }
 
     @Nullable
@@ -43,7 +38,7 @@ public class UserIssuesFragment extends Fragment {
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.userIssuesPager);
-        final IssuesPagerAdapter adapter = new IssuesPagerAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
+        final PagerAdapter adapter = new PagerAdapter(getActivity().getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

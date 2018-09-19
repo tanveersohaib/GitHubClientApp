@@ -1,13 +1,13 @@
-package com.example.sohaibtanveer.githubdemo.userHome.issues;
+package com.example.sohaibtanveer.githubdemo.userHome.issuesAndPullRequests;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class IssuesPagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter {
     int numOfTabs;
 
-    public IssuesPagerAdapter(FragmentManager fm,int numOfTabs){
+    public PagerAdapter(FragmentManager fm, int numOfTabs){
         super(fm);
         this.numOfTabs = numOfTabs;
     }
@@ -16,11 +16,11 @@ public class IssuesPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0: //Tab 1
-                return IssuesViewFragment.newInstance();
+                return ViewFragment.newInstance();
             case 1:
-                return  IssuesViewFragment.newInstance();
+                return  ViewFragment.newInstance();
             case 2:
-                return  IssuesViewFragment.newInstance();
+                return  ViewFragment.newInstance();
             default:
                 return null;
         }

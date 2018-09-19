@@ -1,4 +1,4 @@
-package com.example.sohaibtanveer.githubdemo.userHome;
+package com.example.sohaibtanveer.githubdemo.userHome.drawer;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

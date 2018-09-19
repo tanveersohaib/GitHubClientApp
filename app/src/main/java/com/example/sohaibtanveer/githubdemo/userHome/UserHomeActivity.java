@@ -11,10 +11,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,18 +22,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sohaibtanveer.githubdemo.auth.LoginActivity;
 import com.example.sohaibtanveer.githubdemo.models.AccessTokenPOJO;
 import com.example.sohaibtanveer.githubdemo.models.UserPOJO;
 import com.example.sohaibtanveer.githubdemo.R;
-import com.example.sohaibtanveer.githubdemo.repositoryView.codeFragment.CodeFragment;
 import com.example.sohaibtanveer.githubdemo.repositoryView.issuesFragment.IssuesFragment;
 import com.example.sohaibtanveer.githubdemo.repositoryView.pullRequestsFragment.PullRequestsFragment;
 import com.example.sohaibtanveer.githubdemo.search.SearchResultsActivity;
+import com.example.sohaibtanveer.githubdemo.userHome.drawer.NavigationPagerAdapter;
+import com.example.sohaibtanveer.githubdemo.userHome.issues.UserIssuesFragment;
 import com.example.sohaibtanveer.githubdemo.util.GitHubService;
 import com.example.sohaibtanveer.githubdemo.util.RCallback;
 import com.example.sohaibtanveer.githubdemo.util.RetrofitClient;
@@ -174,7 +171,8 @@ public class UserHomeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.user_home, menu);
-        SearchView search = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
+        MenuItem item = menu.findItem(R.id.search);
+        SearchView search = (SearchView) item.getActionView();
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
         search.setQueryHint(getResources().getString(R.string.search_hint));
@@ -203,6 +201,7 @@ public class UserHomeActivity extends AppCompatActivity
 */
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
@@ -232,7 +231,7 @@ public class UserHomeActivity extends AppCompatActivity
                                 selectedFragment = IssuesFragment.newInstance();
                                 break;
                             case R.id.issues:
-                                selectedFragment = IssuesFragment.newInstance();
+                                selectedFragment = UserIssuesFragment.newInstance();
                                 break;
                             case R.id.pullReq:
                                 selectedFragment = PullRequestsFragment.newInstance();

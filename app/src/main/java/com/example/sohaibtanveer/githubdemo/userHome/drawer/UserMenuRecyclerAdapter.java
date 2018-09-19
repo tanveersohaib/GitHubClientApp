@@ -1,4 +1,4 @@
-package com.example.sohaibtanveer.githubdemo.userHome;
+package com.example.sohaibtanveer.githubdemo.userHome.drawer;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package com.example.sohaibtanveer.githubdemo.userHome;
+package com.example.sohaibtanveer.githubdemo.userHome.drawer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +20,6 @@ import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
-import static android.content.Context.POWER_SERVICE;
 import static com.example.sohaibtanveer.githubdemo.GithubApplication.bus;
 
 public class UserAccountFragment extends Fragment {

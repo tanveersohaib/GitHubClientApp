@@ -10,29 +10,29 @@ import android.widget.Button;
 import com.example.sohaibtanveer.githubdemo.R;
 import com.example.sohaibtanveer.githubdemo.userHome.UserHomeActivity;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(UserHomeActivity.isUserActive()) {
-            Intent intent = new Intent(this,UserHomeActivity.class);
-            startActivity(intent);
-            this.finish();
+            redirectToHome();
         }
-        else {
-            setContentView(R.layout.activity_login);
-            Button loginBtn = (Button) findViewById(R.id.login);
-            loginBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    redirectToLogin();
-                }
-            });
-        }
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
     }
 
-    private void redirectToLogin() {
+    private void redirectToHome() {
+        Intent intent = new Intent(this,UserHomeActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
+
+    @OnClick(R.id.login)
+    public void redirectToLogin() {
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse("https://github.com/login/oauth/authorize?client_id=25a2190a925d5982a5ae"));
         startActivity(i);

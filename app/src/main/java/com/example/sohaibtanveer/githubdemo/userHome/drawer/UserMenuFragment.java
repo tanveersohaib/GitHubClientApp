@@ -1,7 +1,5 @@
-package com.example.sohaibtanveer.githubdemo.userHome;
+package com.example.sohaibtanveer.githubdemo.userHome.drawer;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,19 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
-import com.example.sohaibtanveer.githubdemo.GithubApplication;
 import com.example.sohaibtanveer.githubdemo.R;
 import com.example.sohaibtanveer.githubdemo.models.DrawerMenuItem;
 
-import java.net.UnknownServiceException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserMenuFragment extends Fragment{
 

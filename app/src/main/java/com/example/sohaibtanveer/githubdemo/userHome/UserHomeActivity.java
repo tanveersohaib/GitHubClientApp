@@ -173,6 +173,7 @@ public class UserHomeActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.user_home, menu);
         MenuItem item = menu.findItem(R.id.search);
         SearchView search = (SearchView) item.getActionView();
+        search.setIconifiedByDefault(false);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchResultsActivity.class)));
         search.setQueryHint(getResources().getString(R.string.search_hint));
@@ -220,7 +221,6 @@ public class UserHomeActivity extends AppCompatActivity
 
     private void setBottomNavBar() {
         final BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.userHomeBottomNav);
-
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -228,7 +228,7 @@ public class UserHomeActivity extends AppCompatActivity
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.feeds:
-                                selectedFragment = IssuesFragment.newInstance();
+                                selectedFragment = FeedsFragment.newInstance();
                                 break;
                             case R.id.issues:
                                 selectedFragment = TabbedFragment.newInstance();

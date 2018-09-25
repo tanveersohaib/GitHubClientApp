@@ -2,12 +2,14 @@ package com.example.sohaibtanveer.githubdemo.util;
 
 import com.example.sohaibtanveer.githubdemo.models.AccessTokenPOJO;
 import com.example.sohaibtanveer.githubdemo.models.DirectoryPOJO;
+import com.example.sohaibtanveer.githubdemo.models.Event;
 import com.example.sohaibtanveer.githubdemo.models.ReadmePOJO;
 import com.example.sohaibtanveer.githubdemo.models.RepoBranchPOJO;
 import com.example.sohaibtanveer.githubdemo.models.RepoSearchResultPOJO;
 import com.example.sohaibtanveer.githubdemo.models.TagsPOJO;
 import com.example.sohaibtanveer.githubdemo.models.UserPOJO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -45,4 +47,6 @@ public interface GitHubService {
     @GET
     Call<List<TagsPOJO>> getTags(@Url String url, @Query("access_token") String access_token);
 
+    @GET
+    Call<List<Event>> getFeeds(@Url String url, @Query("access_token") String access_token);
 }

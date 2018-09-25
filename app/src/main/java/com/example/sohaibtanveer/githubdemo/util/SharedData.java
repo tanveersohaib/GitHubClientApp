@@ -2,8 +2,13 @@ package com.example.sohaibtanveer.githubdemo.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.sohaibtanveer.githubdemo.GithubApplication;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SharedData {
     private static String fileName = "user_data";
@@ -42,6 +47,14 @@ public class SharedData {
         }
     }
 
+    public static void setUserName(String name){
+        if(name != null) {
+            editor = pref.edit();
+            editor.putString("user_name", name);
+            editor.apply();
+        }
+    }
+
     public static boolean hasRepositoryName(){
         return pref.contains("repo_name");
     }
@@ -49,5 +62,7 @@ public class SharedData {
     public static String getRepositoryName(){
         return pref.getString("repo_name",null);
     }
+
+    public static String getUserName() {return pref.getString("user_name",null);}
 
 }

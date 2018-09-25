@@ -41,4 +41,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'info.hoang8f:android-segmented:1.0.6'
     implementation 'com.prof.rssparser:rssparser:1.4.4'
+    implementation 'net.dgardiner.markdown:markdown:1.1.0'
+    implementation 'org.jsoup:jsoup:1.10.1'
 }

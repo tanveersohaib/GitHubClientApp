@@ -4,33 +4,69 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/feedAvatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="18.5dp"
+        android:layout_marginStart="18.5dp"/>
+
     <TextView
-        android:id="@+id/feedTitle"
+        android:id="@+id/feedUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:textStyle="bold"
         android:textSize="15sp"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="19.5dp"
+        android:layout_toEndOf="@id/feedAvatar"
+        android:layout_marginStart="20dp"/>
 
     <TextView
         android:id="@+id/feedDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/feedTitle"
-        android:text="Description"/>
+        android:layout_toEndOf="@id/feedUserName"
+        android:textSize="15sp"
+        android:textStyle="bold"
+
+        android:layout_marginTop="19.5dp"
+        android:layout_marginStart="3dp"/>
+
+    <TextView
+        android:id="@+id/feedName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/feedDescription"
+        android:layout_toEndOf="@id/feedAvatar"
+        android:layout_marginStart="20dp" />
+
 
     <TextView
         android:id="@+id/feedContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/feedDescription"
-        android:text="Content" />
+        android:layout_below="@id/feedName"
+        android:layout_toEndOf="@id/feedAvatar"
+        android:layout_marginStart="20dp"
+        android:textSize="13sp"
+        android:maxLines="3"
+        android:textColor="#FF716F81"/>
+
+    <ImageView
+        android:id="@+id/feedIcon"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_below="@id/feedContent"
+        android:layout_toEndOf="@id/feedAvatar"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/ic_flame" />
 
     <TextView
-        android:id="@+id/feedCategories"
+        android:id="@+id/feedTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/feedContent"
-        android:text="Categories"/>
+        android:layout_toEndOf="@id/feedIcon"
+        android:layout_marginStart="10dp"
+        android:textSize="12sp"
+        android:textColor="#FF716F81"/>
 </RelativeLayout>

@@ -129,6 +129,7 @@ public class UserHomeActivity extends AppCompatActivity
                 @Override
                 public void success(UserPOJO object) {
                     user = object;
+                    SharedData.setUserName(user.getLogin());
                     updateUI();
                 }
 
@@ -245,7 +246,7 @@ public class UserHomeActivity extends AppCompatActivity
                 });
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.userHomeContent, IssuesFragment.newInstance());
+        transaction.replace(R.id.userHomeContent, FeedsFragment.newInstance());
         transaction.commit();
 
     }
